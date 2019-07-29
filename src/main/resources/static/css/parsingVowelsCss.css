@@ -1,5 +1,5 @@
 .headline{
-	font-size:40px;
+	font-size:80px;
 	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	color:#696969;	
 }
@@ -8,8 +8,42 @@
 	margin-bottom:10px;
 }
 .result{
-   font-size:40px;	
+    font-size:100px;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+.selectEmphasis{
+	font-size:100px;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 }
 .red{
 	color:#FF0000;
+}
+#strong{
+	font-size:105px;
+	font-weight: 600;
+}
+.onlyblack:hover{
+	text-decoration: underline;
+	background: #DCDCDC;
+}
+
+#position{
+	text-decoration: underline;
+	background: #DCDCDC;
+}
+
+.comit{
+	font-size:20px;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+	color:#696969;
+}
+
+input[type=text]{
+	width:450px;
+	height:70px;
+	font-size:50px;
+}
+input[type=submit]{
+	height:75px;
+	vertical-align: top;
 }

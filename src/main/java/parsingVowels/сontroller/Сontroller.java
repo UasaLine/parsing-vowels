@@ -17,11 +17,20 @@ public class Сontroller {
     public String index() {
         return "index";
     }
+
     @GetMapping(value = "/data",produces= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<SimbolForFront> Parsing(@RequestParam(required = false) String val,
+                                        @RequestParam(required = false) String position) {
+
+        return Parsing.parsingVowels(val,Integer.parseInt(position));
+    }
+
+    @GetMapping(value = "/dataforposition",produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<SimbolForFront> Parsing(@RequestParam(required = false) String val) {
 
-        return Parsing.parsingVowels(val);
+        return Parsing.parseCharacters(val);
     }
 
 }
