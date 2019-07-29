@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Parsing {
 
-    public static List<SimbolForFront> parsingVowels(String line,int position){
+    public static List<SimbolForFront> parsingVowels(String line,int pos){
 
         line = line.toLowerCase();
         char[] lineArr = line.toCharArray();
@@ -14,13 +14,13 @@ public class Parsing {
         for (int i=0;i<lineArr.length;i++){
             if (vowels(lineArr[i])){
 
-                Pare pare = replaceVowel(lineArr,i,position);
+                Pare pare = replaceVowel(lineArr,i,pos);
 
                 if(pare.getBefore()!=""){
                     listResult.add(new SimbolForFront(0, pare.getBefore()));
                 }
 
-                listResult.add(new SimbolForFront(1,pare.getValue().toUpperCase(),i,(position==i)? 1: 0));
+                listResult.add(new SimbolForFront(1,pare.getValue().toUpperCase(),i,(pos==i)? 1: 0));
 
                 if (!lastSimbol(i,lineArr)) {
                     listResult.add(new SimbolForFront(0, "-"));
@@ -172,7 +172,6 @@ public class Parsing {
         }
         return false;
     }
-
 
     private static String replaceConsonant(char charSim, boolean lastSimbol){
 
