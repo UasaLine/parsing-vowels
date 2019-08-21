@@ -2,7 +2,11 @@ jQuery('document').ready(function(){
 
     var position = 0;
 
-	$('#button').on('click',function(){
+    $('#button').on('click',function(){
+
+        $(".divEnter").toggleClass("leave");
+        $(".divChoice").toggleClass("come");
+
 
         $.ajax({
             url: 'dataforposition',
@@ -15,9 +19,14 @@ jQuery('document').ready(function(){
                 alert('error:' + data);
             }
         });
-	});
+
+    });
 
     $('.selectEmphasis').on('click','.onlyblack',function(){
+
+        $(".divChoice").toggleClass("come");
+        $(".divResult").toggleClass("come");
+
 
         takeOff('position');
         $(this).attr('id','position');
@@ -36,6 +45,11 @@ jQuery('document').ready(function(){
         });
     });
 
+    $('.back').on('click',function(){
+        $(".divEnter").toggleClass("leave");
+        $(".divResult").toggleClass("come");
+    });
+
     function takeOff(attr){
 
         var elems = $('#'+attr);
@@ -45,22 +59,22 @@ jQuery('document').ready(function(){
         }
     }
 
-	function toBuild(data,div) {
+    function toBuild(data,div) {
 
         //delete
         $('.red').remove();
         $('.black').remove();
 
         for(var j=0; j<data.length; ++j){
-        	if((data[j].red == 1)&&(data[j].strong==0)){
+            if((data[j].red == 1)&&(data[j].strong==0)){
                 $('<span>').attr('class','red').text(data[j].simbol).appendTo(div);
-			}
-			else if((data[j].red == 1)&&(data[j].strong==1)){
+            }
+            else if((data[j].red == 1)&&(data[j].strong==1)){
                 $('<span>').attr('class','red').text(data[j].simbol).attr('id','strong').appendTo(div);
             }
-			else {
+            else {
                 $('<span>').attr('class','black').text(data[j].simbol).appendTo(div);
-			}
+            }
 
         }
     }

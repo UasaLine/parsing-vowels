@@ -1,49 +1,124 @@
+body{
+    background: #1b4f7a;
+}
+
+#picture_background{
+    width:100%;
+}
+
 .headline{
-	font-size:80px;
-	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-	color:#696969;	
+    font-size:80px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    color:#FFFFE0;
+}
+.headlineBack{
+    font-size:30px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    color:#FFFFE0;
+}
+.headlineBack:hover{
+    font-size:30px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    background:#696969;
 }
 .titdiv{
-	border-bottom:1px solid #808080;
-	margin-bottom:10px;
+    border-bottom:1px solid #808080;
+    margin-bottom:10px;
+    width:400px;
+    margin:0 auto;
+}
+.textarea{
+    width:600px;
+    margin:0 auto;
 }
 .result{
     font-size:100px;
-	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    width: 600px;
+    margin:0 auto;
+    color:#211f1f;
 }
 .selectEmphasis{
-	font-size:100px;
-	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    width:600px;
+    font-size:100px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    margin:0 auto;
+    color:#211f1f;
 }
 .red{
-	color:#FF0000;
+    color:#FF0000;
 }
 #strong{
-	font-size:105px;
-	font-weight: 600;
+    font-size:105px;
+    font-weight: 600;
 }
 .onlyblack:hover{
-	text-decoration: underline;
-	background: #DCDCDC;
+    text-decoration: underline;
+    background: #DCDCDC;
+    color:#808080;
 }
 
 #position{
-	text-decoration: underline;
-	background: #DCDCDC;
+    text-decoration: underline;
+    background: #DCDCDC;
 }
 
 .comit{
-	font-size:20px;
-	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-	color:#696969;
+    font-size:20px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    color:#FFFFE0;
 }
 
 input[type=text]{
-	width:450px;
-	height:70px;
-	font-size:50px;
+    width:450px;
+    height:70px;
+    font-size:50px;
+    color:#211f1f;
 }
 input[type=submit]{
-	height:75px;
-	vertical-align: top;
+    height:76px;
+    vertical-align: top;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    color: #211f1f;
+    //background-color: #FFFFFF;
+    border: 1px solid #A9A9A9;
+}
+
+input[type=submit]:hover {
+    color: #211f1f;
+    background-color: #FFFFFF;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    border: 3px solid #A9A9A9;
+}
+
+.divEnter{
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:100%;
+    transition: all 1.1s ease-in-out;
+}
+.divChoice{
+    position:absolute;
+    top:-700px;
+    left:10px;
+    width:100%;
+    transition: all 1.1s ease-in-out;
+}
+.divResult{
+    position:absolute;
+    top:-700px;
+    left:10px;
+    width:100%;
+    transition: all 1.1s ease-in-out;
+}
+
+.leave {
+    transform: translateY(-700px);
+}
+.come {
+    transform: translateY(700px);
+}
+.back:hover{
+    border-bottom:1px solid #808080;
 }
