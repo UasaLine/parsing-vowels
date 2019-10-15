@@ -1,6 +1,8 @@
 jQuery('document').ready(function(){
 
     var position = 0;
+    var countAccent = 0;
+    var object;
 
     $('#button').on('click',function(){
 
@@ -9,7 +11,7 @@ jQuery('document').ready(function(){
 
 
         $.ajax({
-            url: 'dataforposition',
+            url: 'analyze',
             data: {val: $('#line').val()},
             dataType: 'json',
             success: function (data) {
@@ -24,25 +26,30 @@ jQuery('document').ready(function(){
 
     $('.selectEmphasis').on('click','.onlyblack',function(){
 
-        $(".divChoice").toggleClass("come");
-        $(".divResult").toggleClass("come");
+        takeOff('position',$(this).attr('word'));
+        $(this).attr('accent',1);
+        setDataObject($(this).attr('word'),$(this).attr('data'),1);
 
+        if (accentEstablished() == countAccent ) {
 
-        takeOff('position');
-        $(this).attr('id','position');
-        position = $(this).attr('data');
+            var objectJson = JSON.stringify(object);
+            $.ajax({
+                type: 'POST',
+                url: 'data',
+                contentType: "application/json",
+                data: objectJson,
+                dataType: "json",
+                success: function (data) {
+                    toBuild(data, '.result');
 
-        $.ajax({
-            url: 'data',
-            data: {val: $('#line').val(),position: position},
-            dataType: 'json',
-            success: function (data) {
-                toBuild(data,'.result');
-            },
-            error: function (data) {
-                alert('error:' + data);
-            }
-        });
+                    $(".divChoice").toggleClass("come");
+                    $(".divResult").toggleClass("come");
+                },
+                error: function (data) {
+                    alert('error:' + data);
+                }
+            });
+        };
     });
 
     $('.back').on('click',function(){
@@ -50,12 +57,13 @@ jQuery('document').ready(function(){
         $(".divResult").toggleClass("come");
     });
 
-    function takeOff(attr){
+    function takeOff(attr,word){
 
-        var elems = $('#'+attr);
+        var elems = $('[word='+word+']');
         var elemsTotal = elems.length;
         for(var i=0; i<elemsTotal; ++i){
-            $(elems[i]).attr('id', i)
+            $(elems[i]).attr('accent', 0);
+            setDataObject(word,i,0);
         }
     }
 
@@ -87,23 +95,46 @@ jQuery('document').ready(function(){
         $('.onlyBlackNonPosition').remove();
         $('.onlyblack').remove();
 
-        for(var j=0; j<data.length; ++j){
+        object = data;
 
-            if(data[j].red == 1){
-                $('<span>').attr('class','onlyblack')
-                    .text(data[j].simbol)
-                    .attr('data',data[j].position)
+        for(var i=0; i<data.length; ++i) {
+
+            var word = data[i];
+
+            for (var j = 0; j < word.length; ++j) {
+
+                if ( word[j].red == 1) {
+                    $('<span>').attr('class', 'onlyblack')
+                        .text( word[j].simbol)
+                        .attr('data',  word[j].position)
+                        .attr('word',i)
+                        .appendTo(div);
+                }
+                else {
+                    $('<span>').attr('class', 'onlyBlackNonPosition')
+                        .text( word[j].simbol)
+                        .attr('data',  word[j].position)
+                        .appendTo(div);
+                }
+            }
+
+            if (i!=data.length-1){
+                $('<span>').attr('class', 'onlyBlackNonPosition')
+                    .text(' ')
+                    .attr('data', 0)
                     .appendTo(div);
             }
-            else {
-                $('<span>').attr('class','onlyBlackNonPosition')
-                    .text(data[j].simbol)
-                    .attr('data',data[j].position)
-                    .appendTo(div);
-            }
 
-
+            countAccent++;
         }
+    }
+
+    function accentEstablished(){
+        return $('[accent=1]').length;
+    }
+
+    function setDataObject(i,j,val){
+        object[Number.parseInt(i)][Number.parseInt(j)].accent = val;
     }
 
 });

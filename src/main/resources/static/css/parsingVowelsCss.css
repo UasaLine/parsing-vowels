@@ -7,8 +7,6 @@ body{
 }
 
 .headline{
-    font-size:80px;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     color:#FFFFE0;
 }
 .headlineBack{
@@ -22,10 +20,9 @@ body{
     background:#696969;
 }
 .titdiv{
-    border-bottom:1px solid #808080;
     margin-bottom:10px;
-    width:400px;
     margin:0 auto;
+    text-align:  center;
 }
 .textarea{
     width:600px;
@@ -33,17 +30,17 @@ body{
 }
 .result{
     font-size:100px;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    width: 600px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";margin:0 auto;
+    text-align:  center;
     margin:0 auto;
-    color:#211f1f;
+    color:#373a3c;
 }
 .selectEmphasis{
-    width:600px;
+//width:600px;
     font-size:100px;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    margin:0 auto;
-    color:#211f1f;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";margin:0 auto;
+    color:#373a3c;
+    text-align:  center;
 }
 .red{
     color:#FF0000;
@@ -68,19 +65,20 @@ body{
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     color:#FFFFE0;
 }
-
+/*
 input[type=text]{
     width:450px;
     height:70px;
     font-size:50px;
     color:#211f1f;
 }
+*/
 input[type=submit]{
     height:76px;
     vertical-align: top;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     color: #211f1f;
-    //background-color: #FFFFFF;
+//background-color: #FFFFFF;
     border: 1px solid #A9A9A9;
 }
 
@@ -121,4 +119,7 @@ input[type=submit]:hover {
 }
 .back:hover{
     border-bottom:1px solid #808080;
+}
+.display-4{
+    color:white;
 }

@@ -2,12 +2,11 @@ package parsingVowels.сontroller;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import parsingVowels.Parsing;
 import parsingVowels.SimbolForFront;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,19 +17,20 @@ public class Сontroller {
         return "index";
     }
 
-    @GetMapping(value = "/data",produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/data", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<SimbolForFront> Parsing(@RequestParam(required = false) String val,
-                                        @RequestParam(required = false) String position) {
+    public List<SimbolForFront> Parsing(@RequestBody ArrayList<ArrayList<SimbolForFront>> objectJson) {
 
-        return Parsing.parsingVowels(val,Integer.parseInt(position));
+        //return Parsing.parsingVowels(val,Integer.parseInt(1));
+        return null;
     }
 
-    @GetMapping(value = "/dataforposition",produces= MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/analyze",produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<SimbolForFront> Parsing(@RequestParam(required = false) String val) {
+    public List<List<SimbolForFront>> Parsing(@RequestParam(required = false) String val) {
 
-        return Parsing.parseCharacters(val);
+        return  Parsing.splitTheStringIntoWords(val);
+
     }
 
 }

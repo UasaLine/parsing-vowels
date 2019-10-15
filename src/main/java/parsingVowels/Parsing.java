@@ -1,17 +1,32 @@
 package parsingVowels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Parsing {
+
+    public static List<List<SimbolForFront>> splitTheStringIntoWords(String line){
+
+        String[] wordArr = line.split(" ");
+
+        List<List<SimbolForFront>> listWithProcessedWord = new ArrayList<>();
+
+        Arrays.stream(wordArr)
+              .forEach((word)->listWithProcessedWord.add(parseCharacters(word)));
+
+        return listWithProcessedWord;
+    }
 
     public static List<SimbolForFront> parsingVowels(String line,int pos){
 
         line = line.toLowerCase();
         char[] lineArr = line.toCharArray();
         List<SimbolForFront> listResult = new ArrayList<SimbolForFront>();
+        char lastProcessedSimbol = " ".charAt(0);
 
         for (int i=0;i<lineArr.length;i++){
+
             if (vowels(lineArr[i])){
 
                 Pare pare = replaceVowel(lineArr,i,pos);
@@ -20,22 +35,71 @@ public class Parsing {
                     listResult.add(new SimbolForFront(0, pare.getBefore()));
                 }
 
-                listResult.add(new SimbolForFront(1,pare.getValue().toUpperCase(),i,(pos==i)? 1: 0));
+                listResult.add(new SimbolForFront(1,
+                                                  pare.getValue().toUpperCase(),
+                                                  lineArr[i]));
 
-                if (!lastSimbol(i,lineArr)) {
+                if (!lastVowelsSimbol(i,lineArr)) {
                     listResult.add(new SimbolForFront(0, "-"));
                 }
+                lastProcessedSimbol = lineArr[i];
             }
             else {
 
-                String simbol = replaceConsonant(lineArr[i],lastSimbol(i,lineArr));
+                if (lastProcessedSimbol == lineArr[i]){
+                      continue;
+                }
+                String simbol = replaceConsonant(lineArr,i);
                 listResult.add(new SimbolForFront(0,simbol));
+                lastProcessedSimbol = lineArr[i];
             }
 
         }
 
         return listResult;
     }
+
+    public static List<SimbolForFront> parsingVowels(List<SimbolForFront> word){
+
+        List<SimbolForFront> listResult = new ArrayList<SimbolForFront>();
+        char lastProcessedSimbol = " ".charAt(0);
+
+        for (SimbolForFront simbol:word){
+
+            char curSim = simbol.getSimbol().charAt(0);
+
+            if (vowels(curSim)){
+
+                Pare pare = replaceVowel(word,word.indexOf(simbol));
+
+                if(pare.getBefore()!=""){
+                    listResult.add(new SimbolForFront(0, pare.getBefore()));
+                }
+
+                listResult.add(new SimbolForFront(1,
+                        pare.getValue().toUpperCase(),
+                        lineArr[i]));
+
+                if (!lastVowelsSimbol(i,lineArr)) {
+                    listResult.add(new SimbolForFront(0, "-"));
+                }
+                lastProcessedSimbol = lineArr[i];
+            }
+            else {
+
+                if (lastProcessedSimbol == lineArr[i]){
+                    continue;
+                }
+                String simbol = replaceConsonant(lineArr,i);
+                listResult.add(new SimbolForFront(0,simbol));
+                lastProcessedSimbol = lineArr[i];
+            }
+
+        }
+
+        return listResult;
+    }
+
 
     public static List<SimbolForFront> parseCharacters(String line){
 
@@ -45,23 +109,22 @@ public class Parsing {
 
         for (int i=0;i<lineArr.length;i++){
 
-            if (vowels(lineArr[i])){
-                String simbol = String.valueOf(lineArr[i]);
-                listResult.add(new SimbolForFront(1, simbol,i));
+            char curSim = lineArr[i];
+
+            if (vowels(curSim)){
+                String simbol = String.valueOf(curSim);
+                listResult.add(new SimbolForFront(1,simbol,i,curSim));
             }
             else {
-                String simbol = String.valueOf(lineArr[i]);
-                listResult.add(new SimbolForFront(0, simbol,i));
+                String simbol = String.valueOf(curSim);
+                listResult.add(new SimbolForFront(0, simbol,i,curSim));
             }
-
-
-
         }
 
         return listResult;
     }
 
-    private static Pare replaceVowel(char[] arr,int i,int position){
+    private static Pare replaceVowel(List<SimbolForFront> arr,int i){
 
 
         char charSim = arr[i];
@@ -74,7 +137,11 @@ public class Parsing {
                 pare.setValue("а");;
                 pare.setBefore("");
             }
-            else if(checkConsonant(arr,i)){
+            else if (firstInAWord(arr,i)){
+                pare.setValue("а");
+                pare.setBefore("й");
+            }
+            else if(checkConsonant(arr,i) && beforeSoftSign(arr,i)){
                 pare.setValue("а");
                 pare.setBefore("й");
             }
@@ -89,6 +156,10 @@ public class Parsing {
                 if(checkConsonant(arr,i)){
                     pare.setBefore("й");
                 }
+                else if (firstInAWord(arr,i)){
+                    pare.setValue("о");
+                    pare.setBefore("й");
+                }
                 else {
                     pare.setBefore("ь");
                 }
@@ -98,6 +169,10 @@ public class Parsing {
             if(checkConsonant(arr,i)){
                 pare.setBefore("й");
             }
+            else if (firstInAWord(arr,i)){
+                pare.setValue("у");
+                pare.setBefore("й");
+            }
             else {
                 pare.setBefore("ь");
             }
@@ -105,6 +180,10 @@ public class Parsing {
         else if(charSim == "е".charAt(0)){
             pare.setValue("э");
             if(checkConsonant(arr,i)){
+                pare.setBefore("й");
+            }
+            else if (firstInAWord(arr,i)){
+                pare.setValue("э");
                 pare.setBefore("й");
             }
             else {
@@ -135,6 +214,13 @@ public class Parsing {
         }
 
         return pare;
+    }
+
+    private static boolean beforeSoftSign(char[]arr,int i){
+        if (i>0 && arr[i-1]=="ь".charAt(0)){
+           return true;
+        }
+        return false;
     }
 
     private static boolean checkOnTsya(char[]arr,int i){
@@ -173,9 +259,11 @@ public class Parsing {
         return false;
     }
 
-    private static String replaceConsonant(char charSim, boolean lastSimbol){
+    private static String replaceConsonant(char[] lineArr, int i){
 
+        char charSim = lineArr[i];
 
+        boolean lastSimbol = lastSimbol(i,lineArr);
 
         String simbol="";
         String addSimbol="";
@@ -186,6 +274,14 @@ public class Parsing {
         }
         else if((charSim == "г".charAt(0))&& lastSimbol){
             simbol = "к";
+            addSimbol="";
+        }
+        else if((charSim == "д".charAt(0))&& !lastSimbol && lineArr[i+1]=="ь".charAt(0) && lastSimbol(i+1,lineArr)){
+            simbol = "т";
+            addSimbol="";
+        }
+        else if(charSim == "ь".charAt(0) && i!=0 && lineArr[i-1]=="т".charAt(0) && !lastSimbol && lineArr[i+1]=="с".charAt(0)){
+            simbol = "";
             addSimbol="";
         }
         else {
@@ -234,6 +330,16 @@ public class Parsing {
     public static Boolean lastSimbol(int i, char[] arr){
 
         int length = arr.length;
+        if(i==length-1){
+            return true;
+        }
+        return false;
+
+    }
+
+    public static Boolean lastVowelsSimbol(int i, char[] arr){
+
+        int length = arr.length;
 
         boolean lastSimbol = false;
         if(i==length-1){
@@ -247,4 +353,15 @@ public class Parsing {
         }
         return vowels;
     }
+
+    private static boolean firstInAWord(char[]arr,int i){
+        if (i==0){
+            return true;
+        }
+        else if(i>0 && " ".equals(arr[i-1])){
+            return true;
+        }
+        return false;
+    }
+
 }

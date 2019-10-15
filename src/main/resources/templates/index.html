@@ -6,31 +6,45 @@
     <link rel="stylesheet" type="text/css" href="css/parsingVowelsCss.css" />
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/parsingVowelsScript.js"></script>
+    <!-- Подключаем Bootstrap CSS -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-4.3.1css/bootstrap.min.css">
 </head>
 <body>
 <img id="picture_background" src="images/sky_3.jpg" alt="альтернативный текст">
 
 <div class="divEnter">
     <div class="titdiv">
-        <span class="headline">sky vowels</span>
+        <h1 class="display-1 headline">sky vowels</h1>
     </div>
+
+
     <div class="textarea">
+        <!--
         <span class="comit">введи слово и нажми разобрать</span>
-        <input type="text" id="line" >
+        <span class="comit">введи слово и нажми разобрать</span>
+        <input type="text" id="line">
         <input id="button" type="submit" value="разобрать">
+        -->
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="line" placeholder="введи слово и нажми разобрать">
+            </div>
+            <button id="button" type="button" class="btn btn-outline-dark">разобрать</button>
+        </div>
+
     </div>
 </div>
 
-<div class="divChoice">
-    <div class="selectEmphasis">
-        <span class="comit">укажи ударение</span><br>
+    <div class="divChoice">
+        <div class="selectEmphasis">
+            <h1 class="display-4">укажи ударение</h1><br>
+        </div>
     </div>
-</div>
 
-<div class="divResult">
-    <div class="result">
-        <span class="comit back">< вернуться назад </span><br>
+    <div class="divResult">
+        <div class="result">
+            <button type="button" class="btn btn-outline-dark comit back">вернуться назад</button><br>
+        </div>
     </div>
-</div>
 </body>
 </html>
