@@ -2,7 +2,7 @@ jQuery('document').ready(function(){
 
     var position = 0;
     var countAccent = 0;
-    var object;
+    var listWord;
 
     $('#button').on('click',function(){
 
@@ -16,6 +16,7 @@ jQuery('document').ready(function(){
             dataType: 'json',
             success: function (data) {
                 toBuildOnlyBlack(data,'.selectEmphasis');
+                drowPointer();
             },
             error: function (data) {
                 alert('error:' + data);
@@ -29,10 +30,11 @@ jQuery('document').ready(function(){
         takeOff('position',$(this).attr('word'));
         $(this).attr('accent',1);
         setDataObject($(this).attr('word'),$(this).attr('data'),1);
+        drowPointer();
 
         if (accentEstablished() == countAccent ) {
 
-            var objectJson = JSON.stringify(object);
+            var objectJson = JSON.stringify(listWord);
             $.ajax({
                 type: 'POST',
                 url: 'data',
@@ -73,17 +75,24 @@ jQuery('document').ready(function(){
         $('.red').remove();
         $('.black').remove();
 
-        for(var j=0; j<data.length; ++j){
-            if((data[j].red == 1)&&(data[j].strong==0)){
-                $('<span>').attr('class','red').text(data[j].simbol).appendTo(div);
-            }
-            else if((data[j].red == 1)&&(data[j].strong==1)){
-                $('<span>').attr('class','red').text(data[j].simbol).attr('id','strong').appendTo(div);
-            }
-            else {
-                $('<span>').attr('class','black').text(data[j].simbol).appendTo(div);
-            }
+        for (var i=0; i<data.length; ++i){
 
+            var word = data[i];
+            for (var j = 0; j < word .length; ++j) {
+                if ((word[j].red == 1) && (word[j].strong == 0)) {
+                    $('<span>').attr('class', 'red').text(word [j].simbol).appendTo(div);
+                }
+                else if ((word[j].red == 1) && (word[j].strong == 1)) {
+                    $('<span>').attr('class', 'red').text(word [j].simbol).attr('id', 'strong').appendTo(div);
+                }
+                else {
+                    $('<span>').attr('class', 'black').text(word[j].simbol).appendTo(div);
+                }
+
+            }
+            if (i!=data.length-1){
+                $('<span>').attr('class', 'black').text(' ').appendTo(div);
+            }
         }
     }
 
@@ -95,7 +104,8 @@ jQuery('document').ready(function(){
         $('.onlyBlackNonPosition').remove();
         $('.onlyblack').remove();
 
-        object = data;
+        listWord = data;
+        countAccent = 0;
 
         for(var i=0; i<data.length; ++i) {
 
@@ -134,7 +144,11 @@ jQuery('document').ready(function(){
     }
 
     function setDataObject(i,j,val){
-        object[Number.parseInt(i)][Number.parseInt(j)].accent = val;
+        listWord[Number.parseInt(i)][Number.parseInt(j)].accent = val;
+    }
+
+    function drowPointer(){
+        $('#pointer').text(''+$('#pointer').attr('data')+' осталось: '+(countAccent-accentEstablished()));
     }
 
 });

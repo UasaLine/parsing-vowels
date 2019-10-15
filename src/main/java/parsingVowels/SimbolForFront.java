@@ -12,6 +12,27 @@ public class SimbolForFront {
     public SimbolForFront() {
     }
 
+    public SimbolForFront(int red, String simbol, char originalSimbol, int position, int strong, int accent) {
+        this.red = red;
+        this.simbol = simbol;
+        this.originalSimbol = originalSimbol;
+        this.position = position;
+        this.strong = strong;
+        this.accent = accent;
+    }
+
+    public char getOriginalSimbol() {
+        return originalSimbol;
+    }
+
+    public void setOriginalSimbol(char originalSimbol) {
+        this.originalSimbol = originalSimbol;
+    }
+
+    public int getAccent() {
+        return accent;
+    }
+
     public SimbolForFront(int red, String simbol) {
         this.red = red;
         this.simbol = simbol;
@@ -28,6 +49,14 @@ public class SimbolForFront {
         this.red = red;
         this.simbol = simbol;
         this.originalSimbol = originalSimbol;
+    }
+    public SimbolForFront(int red, String simbol, SimbolForFront simbolObject) {
+        this.red = red;
+        this.simbol = simbol;
+        this.originalSimbol = simbolObject.originalSimbol;
+        this.accent =  simbolObject.accent;
+        this.position = simbolObject.position;
+        this.strong = simbolObject.accent;
     }
 
     public int getStrong() {
@@ -67,7 +96,7 @@ public class SimbolForFront {
     }
 
     public void setSimbol(String simbol) {
-        simbol = simbol;
+        this.simbol = simbol;
     }
 
     @Override

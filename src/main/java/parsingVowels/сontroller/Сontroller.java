@@ -19,10 +19,9 @@ public class Сontroller {
 
     @PostMapping(value = "/data", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<SimbolForFront> Parsing(@RequestBody ArrayList<ArrayList<SimbolForFront>> objectJson) {
+    public List<List<SimbolForFront>>Parsing(@RequestBody ArrayList<ArrayList<SimbolForFront>> objectJson) {
 
-        //return Parsing.parsingVowels(val,Integer.parseInt(1));
-        return null;
+        return Parsing.processingListWords(objectJson);
     }
 
     @GetMapping(value = "/analyze",produces= MediaType.APPLICATION_JSON_VALUE)
