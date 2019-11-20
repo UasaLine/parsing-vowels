@@ -8,6 +8,7 @@ public class SimbolForFront {
     private int position;
     private int strong;
     private int accent;
+    private boolean preposition;
 
     public SimbolForFront() {
     }
@@ -33,16 +34,18 @@ public class SimbolForFront {
         return accent;
     }
 
-    public SimbolForFront(int red, String simbol) {
+    public SimbolForFront(int red, String simbol,boolean preposition) {
         this.red = red;
         this.simbol = simbol;
+        this.preposition = preposition;
     }
 
-    public SimbolForFront(int red, String simbol,int position,char originalSimbol) {
+    public SimbolForFront(int red, String simbol, int position, char originalSimbol, boolean preposition) {
         this.red = red;
         this.simbol = simbol;
         this.position = position;
         this.originalSimbol = originalSimbol;
+        this.preposition = preposition;
     }
 
     public SimbolForFront(int red, String simbol, char originalSimbol) {
@@ -50,13 +53,15 @@ public class SimbolForFront {
         this.simbol = simbol;
         this.originalSimbol = originalSimbol;
     }
-    public SimbolForFront(int red, String simbol, SimbolForFront simbolObject) {
+
+    public SimbolForFront(int red, String simbol, SimbolForFront simbolObject,boolean preposition) {
         this.red = red;
         this.simbol = simbol;
         this.originalSimbol = simbolObject.originalSimbol;
-        this.accent =  simbolObject.accent;
+        this.accent = simbolObject.accent;
         this.position = simbolObject.position;
         this.strong = simbolObject.accent;
+        this.preposition = preposition;
     }
 
     public int getStrong() {
@@ -99,8 +104,16 @@ public class SimbolForFront {
         this.simbol = simbol;
     }
 
+    public boolean isPreposition() {
+        return preposition;
+    }
+
+    public void setPreposition(boolean preposition) {
+        this.preposition = preposition;
+    }
+
     @Override
     public String toString() {
-        return  " " + simbol;
+        return " " + simbol;
     }
 }

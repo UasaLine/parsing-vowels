@@ -18,11 +18,11 @@ public class Parsing {
         return listWithProcessedWord;
     }
 
-    public static List<List<SimbolForFront>> processingListWords (ArrayList<ArrayList<SimbolForFront>> listWord){
+    public static List<List<SimbolForFront>> processingListWords(ArrayList<ArrayList<SimbolForFront>> listWord) {
 
         List<List<SimbolForFront>> listWithProcessedWord = new ArrayList<>();
 
-        listWord.stream().forEach((word)->listWithProcessedWord.add(parsingVowels(word)));
+        listWord.stream().forEach((word) -> listWithProcessedWord.add(parsingVowels(word)));
 
         return listWithProcessedWord;
     }
@@ -41,15 +41,13 @@ public class Parsing {
                 Pare pare = replaceVowel(curSim, word, word.indexOf(simbol));
 
                 if (pare.getBefore() != "") {
-                    listResult.add(new SimbolForFront(0, pare.getBefore()));
+                    listResult.add(new SimbolForFront(0, pare.getBefore(), simbol.isPreposition()));
                 }
 
-                listResult.add(new SimbolForFront(1,
-                        pare.getValue().toUpperCase(),
-                        simbol));
+                listResult.add(new SimbolForFront(1, pare.getValue().toUpperCase(), simbol, simbol.isPreposition()));
 
                 if (!lastVowelsSimbol(word, word.indexOf(simbol))) {
-                    listResult.add(new SimbolForFront(0, "-"));
+                    listResult.add(new SimbolForFront(0, "-",simbol.isPreposition()));
                 }
                 lastProcessedSimbol = curSim;
             } else {
@@ -58,7 +56,7 @@ public class Parsing {
                     continue;
                 }
                 String strSimbol = replaceConsonant(curSim, word, word.indexOf(simbol));
-                listResult.add(new SimbolForFront(0, strSimbol));
+                listResult.add(new SimbolForFront(0, strSimbol,simbol.isPreposition()));
                 lastProcessedSimbol = curSim;
             }
 
@@ -70,6 +68,7 @@ public class Parsing {
     public static List<SimbolForFront> parseCharacters(String line) {
 
         line = line.toLowerCase();
+        boolean isPreposition = thisWordIsAnPreposition(line);
         char[] lineArr = line.toCharArray();
         List<SimbolForFront> listResult = new ArrayList<SimbolForFront>();
 
@@ -79,10 +78,10 @@ public class Parsing {
 
             if (vowels(curSim)) {
                 String simbol = String.valueOf(curSim);
-                listResult.add(new SimbolForFront(1, simbol, i, curSim));
+                listResult.add(new SimbolForFront(1, simbol, i, curSim, isPreposition));
             } else {
                 String simbol = String.valueOf(curSim);
-                listResult.add(new SimbolForFront(0, simbol, i, curSim));
+                listResult.add(new SimbolForFront(0, simbol, i, curSim, isPreposition));
             }
         }
 
@@ -99,6 +98,9 @@ public class Parsing {
                 pare.setValue("а");
                 pare.setBefore("");
             } else if (firstInAWord(arr, i) && checkConsonant(arr, i) && beforeSoftSign(arr, i)) {
+                pare.setValue("а");
+                pare.setBefore("й");
+            } else if (firstInAWord(arr, i) && arr.size()==1){
                 pare.setValue("а");
                 pare.setBefore("й");
             } else {
@@ -307,4 +309,30 @@ public class Parsing {
         return false;
     }
 
+    private static boolean thisWordIsAnPreposition(String line) {
+
+        if (line.length() > 5) {
+            return false;
+        } else if (line.length() == 1) {
+            return true;
+        } else if ("это".equals(line)) {
+            return true;
+        } else if ("от".equals(line)) {
+            return true;
+        } else if ("под".equals(line)) {
+            return true;
+        } else if ("над".equals(line)) {
+            return true;
+        } else if ("перед".equals(line)) {
+            return true;
+        } else if ("до".equals(line)) {
+            return true;
+        } else if ("после".equals(line)) {
+            return true;
+        } else if ("около".equals(line)) {
+            return true;
+        }
+
+        return false;
+    }
 }

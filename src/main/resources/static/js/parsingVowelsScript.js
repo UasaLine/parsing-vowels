@@ -1,6 +1,5 @@
 jQuery('document').ready(function(){
 
-    var position = 0;
     var countAccent = 0;
     var listWord;
 
@@ -24,6 +23,52 @@ jQuery('document').ready(function(){
         });
 
     });
+
+        function toBuildOnlyBlack(data,div) {
+
+        //delete
+        $('.red').remove();
+        $('.black').remove();
+        $('.onlyBlackNonPosition').remove();
+        $('.onlyblack').remove();
+
+        listWord = data;
+        countAccent = 0;
+
+        for(var i=0; i<data.length; ++i) {
+
+            var word = data[i];
+
+            for (var j = 0; j < word.length; ++j) {
+
+                if ( word[j].red == 1 && !word[j].preposition) {
+                    $('<span>').attr('class', 'onlyblack')
+                        .text( word[j].simbol)
+                        .attr('data',  word[j].position)
+                        .attr('word',i)
+                        .appendTo(div);
+                }
+                else {
+                    $('<span>').attr('class', 'onlyBlackNonPosition')
+                        .text( word[j].simbol)
+                        .attr('data',  word[j].position)
+                        .appendTo(div);
+                }
+            }
+
+            if (i!=data.length-1){
+                $('<span>').attr('class', 'onlyBlackNonPosition')
+                    .text(' ')
+                    .attr('data', 0)
+                    .appendTo(div);
+            }
+
+            if(!word[0].preposition){
+                countAccent++;
+            }
+
+        }
+    }
 
     $('.selectEmphasis').on('click','.onlyblack',function(){
 
@@ -90,52 +135,12 @@ jQuery('document').ready(function(){
                 }
 
             }
-            if (i!=data.length-1){
+            if (i!=data.length-1 && !word[0].preposition){
                 $('<span>').attr('class', 'black').text(' ').appendTo(div);
             }
-        }
-    }
-
-    function toBuildOnlyBlack(data,div) {
-
-        //delete
-        $('.red').remove();
-        $('.black').remove();
-        $('.onlyBlackNonPosition').remove();
-        $('.onlyblack').remove();
-
-        listWord = data;
-        countAccent = 0;
-
-        for(var i=0; i<data.length; ++i) {
-
-            var word = data[i];
-
-            for (var j = 0; j < word.length; ++j) {
-
-                if ( word[j].red == 1) {
-                    $('<span>').attr('class', 'onlyblack')
-                        .text( word[j].simbol)
-                        .attr('data',  word[j].position)
-                        .attr('word',i)
-                        .appendTo(div);
-                }
-                else {
-                    $('<span>').attr('class', 'onlyBlackNonPosition')
-                        .text( word[j].simbol)
-                        .attr('data',  word[j].position)
-                        .appendTo(div);
-                }
+            else if (i!=data.length-1 && word[0].preposition){
+                $('<span>').attr('class', 'black').text('-').appendTo(div);
             }
-
-            if (i!=data.length-1){
-                $('<span>').attr('class', 'onlyBlackNonPosition')
-                    .text(' ')
-                    .attr('data', 0)
-                    .appendTo(div);
-            }
-
-            countAccent++;
         }
     }
 
