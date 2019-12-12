@@ -100,7 +100,10 @@ public class Parsing {
             } else if (firstInAWord(arr, i) && checkConsonant(arr, i) && beforeSoftSign(arr, i)) {
                 pare.setValue("а");
                 pare.setBefore("й");
-            } else if (firstInAWord(arr, i) && arr.size()==1){
+            } else if ((firstInAWord(arr, i) && arr.size()==1)){
+                pare.setValue("а");
+                pare.setBefore("й");
+            } else if (firstInAWord(arr, i) || beforeVowel(arr, i)){
                 pare.setValue("а");
                 pare.setBefore("й");
             } else {
@@ -112,7 +115,7 @@ public class Parsing {
             pare.setValue("o");
             if (checkConsonant(arr, i)) {
                 pare.setBefore("й");
-            } else if (firstInAWord(arr, i)) {
+            } else if (firstInAWord(arr, i) || beforeVowel(arr, i)) {
                 pare.setValue("о");
                 pare.setBefore("й");
             } else {
@@ -122,7 +125,7 @@ public class Parsing {
             pare.setValue("у");
             if (checkConsonant(arr, i)) {
                 pare.setBefore("й");
-            } else if (firstInAWord(arr, i)) {
+            } else if (firstInAWord(arr, i) || beforeVowel(arr, i)) {
                 pare.setValue("у");
                 pare.setBefore("й");
             } else {
@@ -132,7 +135,7 @@ public class Parsing {
             pare.setValue("э");
             if (checkConsonant(arr, i)) {
                 pare.setBefore("й");
-            } else if (firstInAWord(arr, i)) {
+            } else if (firstInAWord(arr, i) || beforeVowel(arr, i)) {
                 pare.setValue("э");
                 pare.setBefore("й");
             } else {
@@ -232,11 +235,21 @@ public class Parsing {
                 lineArr.get(i + 1).getSimbol().equals("с")) {
             simbol = "";
             addSimbol = "";
+        } else if (charSim == "з".charAt(0) && lastSimbol) {
+            simbol = "с";
+            addSimbol = "";
         } else {
             simbol = String.valueOf(charSim);
         }
 
         return addSimbol + simbol;
+    }
+
+    public static Boolean beforeVowel(List<SimbolForFront> arr, int i){
+        if (arr.size()>1){
+            return vowels(arr.get(i-1).getSimbol().charAt(0));
+        }
+        return false;
     }
 
     public static Boolean vowels(char symbol) {
